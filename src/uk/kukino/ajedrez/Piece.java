@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public enum Piece {
 
-    EMPTY('.'), BLOCKED(':'), KING('K'), QUEEN('Q'), BISHOP('B'), KNIGHT('H'), ROOK('R');
+    EMPTY('.'), BLOCKED('*'), KING('K'), QUEEN('Q'), BISHOP('B'), KNIGHT('H'), ROOK('R');
 
     final byte b;
     final char c;
@@ -43,7 +43,7 @@ public enum Piece {
     private int kingAttack(int[] positions, Board b, int p, int x, int y) {
         for (int xx = -1; xx < 2; xx++) {
             for (int yy = -1; yy < 2; yy++) {
-                if (!(xx == x && y == yy) && (b.isValid(x + xx, y + yy))) {
+                if (!(xx == 0 && yy == 0) && (b.isValid(x + xx, y + yy))) {
                     positions[p++] = b.idx(x + xx, y + yy);
                 }
             }
