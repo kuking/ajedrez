@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public enum Piece {
 
-    EMPTY('.'), BLOCKED(':'), KING('K'), QUEEN('Q'), BISHOP('B'), KNIGHT('H'), ROCK('R');
+    EMPTY('.'), BLOCKED(':'), KING('K'), QUEEN('Q'), BISHOP('B'), KNIGHT('H'), ROOK('R');
 
     final byte b;
     final char c;
@@ -26,14 +26,14 @@ public enum Piece {
         } else if (this == KNIGHT) {
             return knightAttack(positions, b, p, x, y);
 
-        } else if (this == ROCK) {
-            return rockAttack(positions, b, idx, p);
+        } else if (this == ROOK) {
+            return rookAttack(positions, b, p, x, y);
 
         } else if (this == BISHOP) {
             return bishopAttack(positions, b, p, x, y);
 
         } else if (this == QUEEN) {
-            p = rockAttack(positions, b, idx, p);
+            p = rookAttack(positions, b, p, x, y);
             return bishopAttack(positions, b, p, x, y);
         }
         // EMPTY, BLOCKED
@@ -62,15 +62,15 @@ public enum Piece {
         return p;
     }
 
-    private int rockAttack(int[] positions, Board b, int idx, int p) {
+    private int rookAttack(int[] positions, Board b, int p, int x, int y) {
         for (int mm = 0; mm < b.m; mm++) {
-            if (b.isValid(mm, b.y(idx)) && mm != b.m) {
-                positions[p++] = b.idx(mm, b.y(idx));
+            if (b.isValid(mm, y) && mm != x) {
+                positions[p++] = b.idx(mm, y);
             }
         }
         for (int nn = 0; nn < b.n; nn++) {
-            if (b.isValid(b.x(idx), nn) && nn != b.n) {
-                positions[p++] = b.idx(b.x(idx), nn);
+            if (b.isValid(x, nn) && nn != y) {
+                positions[p++] = b.idx(x, nn);
             }
         }
         return p;
@@ -87,11 +87,6 @@ public enum Piece {
         return p;
     }
 
-    public static Comparator<Piece> COMPARATOR = new Comparator<Piece>() {
-        @Override
-        public int compare(Piece o1, Piece o2) {
-            return o1.ordinal() - o2.ordinal();
-        }
-    };
+    public static Comparator<Piece> COMPARATOR = Comparator.comparingInt(Enum::ordinal);
 
 }
