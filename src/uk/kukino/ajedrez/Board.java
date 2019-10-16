@@ -1,12 +1,14 @@
 package uk.kukino.ajedrez;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 
 public class Board {
 
-    static Buffers<byte[]> BUFFERS; //= new Buffers<>(100, () -> new byte[100]);
+    static Buffers<byte[]> BUFFERS;
+
+    static public final void RESET_BUFFERS() {
+        BUFFERS = null;
+    }
 
     private byte[] contents;
     public final int m, n;
@@ -30,9 +32,15 @@ public class Board {
         this.n = n;
     }
 
-    public int empties(int[] empties) {
-        int count = 0;
+    public int emptiesAfterLastPiece(int[] empties, final Piece piece) {
+        int start = 0;
         for (int i = 0; i < m * n; i++) {
+            if (contents[i] == piece.b) {
+                start = i;
+            }
+        }
+        int count = 0;
+        for (int i = start; i < m * n; i++) {
             if (contents[i] == Piece.EMPTY.b) {
                 empties[count++] = i;
             }
@@ -42,11 +50,9 @@ public class Board {
 
     public String hash() {
         if (contents.length == m * n) {
-            return DigestUtils.md5Hex(contents);
-//            return DigestUtils.sha1Hex(contents);
+            return new String(this.contents, StandardCharsets.US_ASCII);
         }
-        return DigestUtils.md5Hex(Arrays.copyOf(contents, m * n));
-//        return DigestUtils.sha1Hex(Arrays.copyOf(contents, m * n));
+        throw new IllegalStateException("You really want to build Board.contents buffers of the right size...RESET_BUFFERS() ?");
     }
 
     public int x(final int idx) {
