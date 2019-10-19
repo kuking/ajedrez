@@ -7,13 +7,13 @@ import time
 from itertools import chain
 
 config = {
-    'M': 5,  # size 6
-    'N': 5,  # size 9
-    'K': 0,  # Kings = 2
-    'Q': 0,  # Queens = 1
-    'B': 0,  # Bishops = 1
-    'R': 2,  # Rocks = 1
-    'H': 4  # Knights (Horses) = 1
+    'M': 6,  # size 6
+    'N': 6,  # size 9
+    'K': 2,  # Kings = 2
+    'Q': 3,  # Queens = 1
+    'B': 2,  # Bishops = 1
+    'R': 2,  # Rooks = 1
+    'H': 2  # Knights (Horses) = 1
 }
 
 
@@ -172,7 +172,7 @@ def iterate(c, b, level):
 
 
 start = time.time()
-print("%ix%i Board, %i Queens, %i Kings, %i Rocks, %i Bishops & %i Knights" % (
+print("python: %ix%i Board, %i Queens, %i Kings, %i Rooks, %i Bishops & %i Knights" % (
     config['M'], config['N'], config['Q'], config['K'], config['R'], config['B'], config['H']))
 
 iterate(config, new_board(config), 1)

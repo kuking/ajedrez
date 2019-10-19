@@ -12,6 +12,7 @@ public class Ajedrez {
 
     long iter = 0;
     long totals = 0;
+    long lastNoticeMs = System.currentTimeMillis();
 
     private void search(Piece[] pieces, int piecesI, Board b, int level) {
 
@@ -43,7 +44,8 @@ public class Ajedrez {
 //            }
 
             totals++;
-            if (totals % 1000_000 == 0) {
+            if (System.currentTimeMillis() > lastNoticeMs + 5000 || false) {
+                lastNoticeMs = System.currentTimeMillis();
                 System.out.println("Found " + totals + " so far");
                 System.out.println(b.toString());
             }
@@ -74,31 +76,35 @@ public class Ajedrez {
         long start = System.currentTimeMillis();
         Ajedrez ajedrez = new Ajedrez();
 
-//        Board b = new Board(6, 6);
-//        Piece[] pieces = new Piece[]{QUEEN, ROCK, BISHOP, KNIGHT, KING};
+//        Board b = new Board(7, 7);
+//        Piece[] pieces = new Piece[]{QUEEN, QUEEN, KNIGHT, KNIGHT, ROOK, ROOK, BISHOP, BISHOP, KING, KING};
 
-        Board b = new Board(7, 7);
-        Piece[] pieces = new Piece[]{QUEEN, QUEEN, KNIGHT, KNIGHT, ROOK, ROOK, BISHOP, BISHOP, KING, KING};
-
-        //        Board b = new Board(5, 5);
+//        Board b = new Board(5, 5);
 //        Piece[] pieces = new Piece[]{ROCK, ROCK, KING, KING, KING, KING};
-//        Board b = new Board(6, 9);
-//        Piece[] pieces = new Piece[]{QUEEN, ROCK, BISHOP, KNIGHT, KING, KING};
+
 //        Board b = new Board(6, 8);
 //        Piece[] pieces = new Piece[]{QUEEN, ROCK, BISHOP, KNIGHT, KING, KING};
+
+        Board b = new Board(6, 9);
+        Piece[] pieces = new Piece[]{QUEEN, ROOK, BISHOP, KNIGHT, KING, KING};
+
 //        Board b = new Board(6, 10);
-//        Piece[] pieces = new Piece[]{QUEEN, ROCK, BISHOP, KNIGHT, KING, KING};
+//        Piece[] pieces = new Piece[]{QUEEN, ROOK, BISHOP, KNIGHT, KING, KING};
+
+//        Board b = new Board(6, 11);
+//        Piece[] pieces = new Piece[]{QUEEN, ROOK, BISHOP, KNIGHT, KING, KING};
+
 //        Board b = new Board(4, 4);
-//        Piece[] pieces = new Piece[]{ROCK, ROCK, KNIGHT, KNIGHT, KNIGHT, KNIGHT};
+//        Piece[] pieces = new Piece[]{ROOK, ROOK, KNIGHT, KNIGHT, KNIGHT, KNIGHT};
+
 //        Board b = new Board(4, 4);
 //        Piece[] pieces = new Piece[]{ROCK, ROCK, KNIGHT, KNIGHT};
 
         ajedrez.search(pieces, 0, b, 1);
         System.out.println("java:" + b.m + "x" + b.n + " " + Arrays.asList(pieces));
-        System.out.println("Total found " + ajedrez.totals); // + "  or #" + ajedrez.finalHashes.size()); // 20352869
-        System.out.println("Took " + (System.currentTimeMillis() - start) / 1000f + " ms, "
+        System.out.println("Total found " + ajedrez.totals);
+        System.out.println("Took " + (System.currentTimeMillis() - start) / 1000f + "s, "
                 + ajedrez.iter + " iterations");
-
     }
 
 }

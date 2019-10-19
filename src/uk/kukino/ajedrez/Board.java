@@ -108,26 +108,6 @@ public class Board {
         return new Board(m, n, buffer);
     }
 
-    public void flipVertical() {
-        for (int mm = 0; mm < m / 2; mm++) {
-            for (int nn = 0; nn < n; nn++) {
-                byte tmp = contents[idx(mm, nn)];
-                contents[idx(mm, nn)] = contents[idx(m - mm - 1, nn)];
-                contents[idx(m - mm - 1, nn)] = tmp;
-            }
-        }
-    }
-
-    public void flipHorizontal() {
-        for (int mm = 0; mm < m; mm++) {
-            for (int nn = 0; nn < n / 2; nn++) {
-                byte tmp = contents[idx(mm, nn)];
-                contents[idx(mm, nn)] = contents[idx(mm, n - nn - 1)];
-                contents[idx(mm, n - nn - 1)] = tmp;
-            }
-        }
-    }
-
     public Piece get(final int x, final int y) {
         return Piece.values()[contents[idx(x, y)]];
     }
